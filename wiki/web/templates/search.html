@@ -17,6 +17,19 @@
             {{ form.ignore_case() }} Ignore Case
 			<input type="submit" class="btn btn-success pull-right" value="Search!">
 		</form>
+
+        <form class="form-inline well" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.date_option(placeholder='Search for... (date accepted)', autocomplete="off") }} Date
+            <input type="submit" class="btn btn-success pull-right" value="Search!">
+        </form>
+
+        <form class="form-inline well" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.keyword(placeholder='Search for.. (keyword accepted)', autocomplete="off") }} Keyword
+            <input type="submit" class="btn btn-success pull-right" value="Search!">
+        </form>
+
 	</div>
 </div>
 
