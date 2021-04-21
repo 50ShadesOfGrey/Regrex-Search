@@ -8,6 +8,29 @@
 {% endif %}
 {% endblock title %}
 
+{% block date %}
+{% if date_search %}
+	Results for "{{ date_search }}"
+{% else %}
+	Search
+{% endif %}
+{% endblock date %}
+
+
+<!--{% block content_date %}
+<div class="row">
+	<div class="span8 offset1">
+
+        <form class="form-inline well" method="POST">
+            {{ date_form.hidden_tag() }}
+            {{ date_form.date_term(placeholder='Search for... (date accepted)', autocomplete="on") }} Date
+            <input type="submit" class="btn btn-success pull-right" value="Search!">
+        </form>
+
+	</div>
+</div>
+{% endblock content_date %}-->
+
 {% block content %}
 <div class="row">
 	<div class="span8 offset1">
@@ -20,7 +43,7 @@
 
         <form class="form-inline well" method="POST">
             {{ form.hidden_tag() }}
-            {{ form.date_option(placeholder='Search for... (date accepted)', autocomplete="off") }} Date
+            {{ date_form.date_term(placeholder='Search for... (date accepted)', autocomplete="on") }} Date
             <input type="submit" class="btn btn-success pull-right" value="Search!">
         </form>
 
@@ -31,6 +54,7 @@
         </form>
 
 	</div>
+
 </div>
 
 {% if search %}
@@ -44,4 +68,5 @@
 		<p>No results for your search.</p>
 	{% endif %}
 {% endif %}
+
 {% endblock content %}

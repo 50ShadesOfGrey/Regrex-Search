@@ -14,7 +14,7 @@ from flask_login import login_user
 from flask_login import logout_user
 
 from wiki.core import Processor
-from wiki.web.forms import EditorForm
+from wiki.web.forms import EditorForm, SearchFormDate
 from wiki.web.forms import LoginForm
 from wiki.web.forms import SearchForm
 from wiki.web.forms import URLForm
@@ -128,6 +128,15 @@ def search():
                                results=results, search=form.term.data)
     return render_template('search.html', form=form, search=None)
 
+@bp.route('/date_search/', methods=['GET', 'POST'])
+@protect
+def date_search():
+    date_form = SearchFormDate()
+    if date_form.validate_on_submit():
+        results = current_wiki.date_search(date_form.term.data, date_form.ignore_case.data)
+        return render_template('search.html', date_form=date_form,
+                               results=results, search=date_form.term.data)
+    return render_template('search.html', date_form=date_form, search=None)
 
 @bp.route('/user/login/', methods=['GET', 'POST'])
 def user_login():
