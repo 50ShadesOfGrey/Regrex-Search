@@ -2,14 +2,17 @@
     Wiki core
     ~~~~~~~~~
 """
-from collections import OrderedDict
-from io import open
 import os
+import os.path
 import re
+import time
+from collections import OrderedDict
+from datetime import datetime, date
+from io import open
 
+import markdown
 from flask import abort
 from flask import url_for
-import markdown
 
 
 def clean_url(url):
@@ -227,6 +230,10 @@ class Page(object):
         self['title'] = value
 
     @property
+    def date(self):
+        return time.ctime(os.path.getmtime(self))
+
+    @property
     def tags(self):
         try:
             return self['tags']
@@ -372,6 +379,17 @@ class Wiki(object):
         for page in pages:
             for attr in attrs:
                 if regex.search(getattr(page, attr)):
+                    matched.append(page)
+                    break
+        return matched
+
+    def date_search(self, term, attrs=['title', 'tags', 'body', 'date']):
+        pages = self.index()
+        date_search = re.compile(term)
+        matched = []
+        for page in pages:
+            for attr in attrs:
+                if (date.isoformat(date.fromtimestamp(os.path.getmtime(page.path))) == term):
                     matched.append(page)
                     break
         return matched

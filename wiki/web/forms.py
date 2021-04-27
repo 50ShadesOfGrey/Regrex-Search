@@ -11,7 +11,7 @@ from wtforms import TextAreaField
 from wtforms import PasswordField
 from wtforms.validators import InputRequired
 from wtforms.validators import ValidationError
-
+import os.path, time
 
 from wiki.core import clean_url
 from wiki.web import current_wiki
@@ -29,6 +29,7 @@ class URLForm(Form):
         return clean_url(url)
 
 
+
 class SearchForm(Form):
     term = TextField('', [InputRequired()])
     ignore_case = BooleanField(
@@ -40,6 +41,13 @@ class SearchForm(Form):
     )
     keyword = StringField(
         description='Keyword'
+    )
+
+
+class SearchFormDate(Form):
+    date_term = TextField('', [InputRequired()])
+    date_option = DateField(
+        description='Date'
     )
 
 
