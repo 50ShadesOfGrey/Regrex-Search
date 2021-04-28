@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if search %}
+	Results for "{{ search }}"
+{% else %}
+	Search
+{% endif %}
+{% endblock title %}
+
+{% block date %}
+{% if date_search %}
+	Results for "{{ date_search }}"
+{% else %}
+	Search
+{% endif %}
+{% endblock date %}
+
+{% block content %}
+<div class="row">
+	<div class="span8 offset1">
+
+        <form class="form-inline well" method="POST">
+            {{ date_form.hidden_tag() }}
+            {{ date_form.date_term(placeholder='Search for... (yyy-mm-dd)', autocomplete="on") }} Date
+            <input type="submit" class="btn btn-success pull-right" value="Search!">
+        </form>
+
+	</div>
+
+</div>
+
+{% if date_search %}
+	{% if results %}
+		<ul>
+			{% for result in results %}
+				<li><a href="{{ url_for('wiki.display', url=result.url) }}">{{ result.title }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No results for your search.</p>
+	{% endif %}
+{% endif %}
+
+{% endblock content %}
